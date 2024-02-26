@@ -39,11 +39,14 @@ public class Fred : MonoBehaviour
     public bool BrokenGlass = false;
     public bool dontwalk = false;
     public bool paint = false;
-    public bool Canpaint = false;
+    public bool Canpaint = true;
     public bool Fire = false;
     public bool FireEnd = false;
     public bool canCrouch = false;
     public bool iptal = false;
+    public bool endPaint = false;
+    public bool EndGlass = false;
+    public bool EndFire = false;
 
 
 
@@ -103,9 +106,13 @@ public class Fred : MonoBehaviour
         {
             GoToFireEnder();
         }
-        if (Canpaint)
+        if(EndFire & EndGlass & StopPath & endPaint)
         {
-            CanPaint();
+            SceneGec();
+        }
+        if (fall)
+        {
+            Falll();
         }
     }
 
@@ -152,6 +159,7 @@ public class Fred : MonoBehaviour
             animator.SetTrigger("crouch");
             animator.SetBool("idle", true);
             BrokenGlass = false;
+            EndGlass = true;
 
         }
     }
@@ -194,16 +202,17 @@ public class Fred : MonoBehaviour
         Instantiate(BrokeGlass, transform1.position, Quaternion.identity);
         glass.GetComponent<MeshRenderer>().enabled = false;
     }
-    private void OnTriggerEnter(Collider other)
+    public void Falll()
     {
-        if (other.gameObject.CompareTag("su") & fall)
-        {
+       
+        
             dontwalk = true;
             animator.SetTrigger("fall");
             iptal = true;
             canCrouch = false;
             fallSound.Play();
-        }
+            fall = false;
+        
 
 
     }
@@ -220,9 +229,9 @@ public class Fred : MonoBehaviour
         dontwalk = false;
         animator.SetBool("idle", false);
     }
-    public void CanPaint()
+    public void OffPaint()
     {
-        
+        CreatedBucket.SetActive(false);
        
 
     }
@@ -299,17 +308,15 @@ public class Fred : MonoBehaviour
         fireSound.Stop();
         animator.SetBool("idle", true);
         canCrouch = true;
+        EndFire = true;
     }
-    public void PaintBoolerOn()
+   public void PaintEnd()
     {
-        Canpaint = true;
+        endPaint = true;
     }
-    public void PaintBoolerOf()
-    {
-        Canpaint = false;
-    }
+    
     public void SceneGec()
     {
-        SceneManager.LoadScene("brief2");
+        SceneManager.LoadScene("bitis2");
     }
 }

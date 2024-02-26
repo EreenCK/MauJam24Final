@@ -21,6 +21,7 @@ public class trigger : MonoBehaviour
             if (other.gameObject.CompareTag("Player"))
             {
               fred.paint = true;
+              fred.Canpaint= true;
                 
             }
     }

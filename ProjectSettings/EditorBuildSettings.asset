@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/bitis.unity
     guid: 98c29cb2d91dafb4eaee50c907bcf0ed
+  - enabled: 1
+    path: Assets/bitis2.unity
+    guid: 93cda2d6b5f908441aecc8e731f0c600
   m_configObjects: {}

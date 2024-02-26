@@ -13,4 +13,5 @@ public class TransToBrief : MonoBehaviour
         SceneManager.LoadScene(sceneName);
                 
     }
+    
 }
