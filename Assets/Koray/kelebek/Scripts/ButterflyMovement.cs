@@ -24,7 +24,7 @@ public class ButterflyMovement : MonoBehaviour
     public Slider powerFocusTimeSlider, powerCooldownSlider;
     public GameObject powerFocusTimeSliderObj;
     public GameObject camHolder;
-    public AudioSource dashSFX;
+    public AudioSource dashSFX, chargeSFX;
     internal bool isDashStarted;
     private bool isPowerUsed;
     private bool isForcePowerFinished = true;
@@ -73,6 +73,7 @@ public class ButterflyMovement : MonoBehaviour
         rightClickUp = Input.GetMouseButtonUp(1);
 
         r = new Ray( origin: camTransform.position, direction: camTransform.forward);
+        Debug.DrawRay(transform.localPosition, new Vector3(1,1,1), Color.green);
 
         if(Physics.Raycast(camTransform.localPosition, camTransform.forward, out hit, maxGrabDist * 2, ~IgnoreRayCast))
         {
@@ -145,12 +146,14 @@ public class ButterflyMovement : MonoBehaviour
 
             if(powerFocusVFX.isStopped)
             {
+                chargeSFX.Play();
                 powerFocusVFX.Play();
             }
 
         }else if(isForcePowerFinished)
         {
             force = forceInput;
+            chargeSFX.Stop();
             powerFocusVFX.Stop();
         }
 

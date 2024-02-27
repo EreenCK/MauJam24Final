@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class DuvarYikma : MonoBehaviour
 {
-    public GameManage game;
+    //public GameManage game;
 
-    public AudioSource puff;
+    //public AudioSource puff;
     public ParticleSystem puffGorsel;
     
     // Start is called before the first frame update
     void Start()
     {
-        puff.Play();
+        //puff.Play();
         puffGorsel.gameObject.SetActive(true);
         puffGorsel.Play();
     }

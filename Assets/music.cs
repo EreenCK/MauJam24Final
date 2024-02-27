@@ -6,7 +6,7 @@ public class music : MonoBehaviour
 {
     public ButterflyMovement butterflysc;
     public AudioSource muizkkutu;
-    private bool muzikcalior;
+    private bool muzikcalior = true;
     void Start()
     {
         
@@ -15,7 +15,6 @@ public class music : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
         if(butterflysc.shootedObject == gameObject)
         {
             if(!muzikcalior)
@@ -28,6 +27,7 @@ public class music : MonoBehaviour
                 muizkkutu.Stop();
                 muzikcalior = false;
             }
-        }*/
+            butterflysc.shootedObject = null;
+        }
     }
 }

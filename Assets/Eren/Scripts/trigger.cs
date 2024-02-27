@@ -10,19 +10,19 @@ public class trigger : MonoBehaviour
         
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         
     }
+
+
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("triggerlabndý");
-            if (other.gameObject.CompareTag("Player"))
-            {
-              fred.paint = true;
-              fred.Canpaint= true;
-                
-            }
+          if (other.gameObject.CompareTag("Player"))
+          {
+                fred.paint = true;
+                fred.Canpaint= true;
+          }
     }
 }

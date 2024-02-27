@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -10,13 +11,11 @@ public class Fred : MonoBehaviour
     public float speed = 3.0f; // Movement speed
     public float waitTime; // Time to wait at each waypoint
     public Animator animator; // Reference to the animator component
-    public trigger trigger;
-
-    private int currentWaypointIndex = 0;
+    //public trigger trigger;
+    private int currentWaypointIndex = 0, nextWayPointIndex;
     private bool isWaiting = false;
     private Vector3 targetPosition;
     public AudioSource glassSound;
-
     public bool StopPath = false;
     public GameObject glass;
     public Transform chair;
@@ -33,10 +32,10 @@ public class Fred : MonoBehaviour
     public AudioSource fireEXT;
     public AudioSource fallSound;
     public AudioSource fireSound;
-    public bool stopmusic=false;
+    //public bool stopmusic=false;
     public bool sit = false;
     public bool fall = false;
-    public bool BrokenGlass = false;
+    internal bool BrokenGlass = false;
     public bool dontwalk = false;
     public bool paint = false;
     public bool Canpaint = true;
@@ -49,7 +48,6 @@ public class Fred : MonoBehaviour
     public bool EndFire = false;
 
 
-
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -60,141 +58,160 @@ public class Fred : MonoBehaviour
     void Update()
     {
         var targetRotation = Quaternion.LookRotation(targetPosition - transform.position);
+
         if (currentWaypointIndex == 6)
         {
             StopPath = true;
         }
-        // Move towards the current waypoint
+
         if (!isWaiting && !StopPath)
         {
             float distance = Vector3.Distance(transform.position, targetPosition);
-            if (distance > 0.1f)
+            if (distance > 0.5f)
             {
-
+                Debug.Log("Walking");
                 transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime / distance);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, speed * Time.deltaTime);
-            }
-            else
+
+            }else
             {
                 StartCoroutine(WaitAtWaypoint());
             }
         }
+
         if (BrokenGlass & StopPath & !Fire)
         {
+
+
             GoToGlass();
-
-
         }
+
         if (sit & StopPath)
         {
             GoToSitting();
-
         }
+
         if (paint & StopPath & Canpaint)
         {
             GetPainted();
         }
+
         if (Fire & StopPath)
         {
             GoToFireEnder();
         }
+
         if (FireEnd & StopPath)
         {
             GoToMachine();
         }
+
         if (Fire & BrokenGlass & StopPath)
         {
             GoToFireEnder();
         }
+
         if(EndFire & EndGlass & StopPath & endPaint)
         {
             SceneGec();
         }
+
         if (fall)
         {
             Falll();
         }
     }
 
+
     IEnumerator WaitAtWaypoint()
     {
+        if(currentWaypointIndex + 1 != waypoints.Length)
+        {
+            nextWayPointIndex = currentWaypointIndex + 1;
+        }
+        
+        Debug.Log("Waiting, next waypoint position: " + waypoints[nextWayPointIndex].position);
+
         isWaiting = true;
-        transform.rotation = Quaternion.Euler(0f, transform.rotation.y, transform.rotation.z);
+        transform.LookAt(new Vector3(waypoints[nextWayPointIndex].position.x, transform.position.y, waypoints[nextWayPointIndex].position.z));
         animator.SetBool("idle", true); // Set walking animation to false
+
         yield return new WaitForSeconds(waitTime);
+
         isWaiting = false;
+
         if (!StopPath)
         {
             MoveToNextWaypoint();
         }
-
-
     }
 
     void MoveToNextWaypoint()
     {
-        currentWaypointIndex = (currentWaypointIndex + 1);
+        currentWaypointIndex ++;
+
+        Debug.Log("Current way point: " + currentWaypointIndex);
+
         targetPosition = waypoints[currentWaypointIndex].position;
         animator.SetBool("idle", false); // Set walking animation to true
-
     }
 
     public void GoToGlass()
     {
         canCrouch = true;
         
-
         animator.SetBool("idle", false);
         targetPosition = BrokeGlass.transform.position;
+
+        Debug.Log("Broken glass position: " + targetPosition);
+        
         var targetRotation = Quaternion.LookRotation(targetPosition - transform.position);
         float distance = Vector3.Distance(transform.position, targetPosition);
 
-        if (distance > .3f && !dontwalk & !FireEnd & canCrouch & !iptal)
+        Debug.Log("Distance between broken glass: " + distance);
+
+        if (distance > 0.3f && !dontwalk & !FireEnd & canCrouch & !iptal)
         {   
             transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime / distance);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, speed * Time.deltaTime);
-        }
-        else if ( !FireEnd & canCrouch & !iptal)
+
+        }else if (!FireEnd & canCrouch & !iptal)
         {
             animator.SetTrigger("crouch");
             animator.SetBool("idle", true);
             BrokenGlass = false;
             EndGlass = true;
-
         }
     }
 
 
     public void GoToSitting()
     {
-
-
         animator.SetBool("idle", false);
 
         targetPosition = chair.position;
         var targetRotation = Quaternion.LookRotation(targetPosition - transform.position);
         float distance = Vector3.Distance(transform.position, targetPosition);
+
         Debug.Log(distance);
 
-        if (distance > .3f)
+        if (distance > 0.3f)
         {
-
             transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime / distance);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, speed * Time.deltaTime);
-        }
-        else
+        }else
         {
-
             animator.SetTrigger("sit");
             sit = false;
         }
     }
+
+
     public void booler()
     {
         sit = true;
     }
-
-
+    
 
     public void CreateGlass(Transform transform1)
     {
@@ -202,45 +219,49 @@ public class Fred : MonoBehaviour
         Instantiate(BrokeGlass, transform1.position, Quaternion.identity);
         glass.GetComponent<MeshRenderer>().enabled = false;
     }
+
+
     public void Falll()
     {
-       
-        
-            dontwalk = true;
-            animator.SetTrigger("fall");
-            iptal = true;
-            canCrouch = false;
-            fallSound.Play();
-            fall = false;
-        
-
-
+        dontwalk = true;
+        animator.SetTrigger("fall");
+        iptal = true;
+        canCrouch = false;
+        fallSound.Play();
+        fall = false;
     }
+
+    
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("su"))
         {
             iptal = false;
-
         }
     }
+
+    
     public void OpenWalk()
     {
         dontwalk = false;
         animator.SetBool("idle", false);
     }
+
+    
     public void OffPaint()
     {
         CreatedBucket.SetActive(false);
-       
-
     }
+    
+
     public void GetPainted()
     {
         fallingBucket.SetActive(false);
         CreatedBucket.SetActive(true);
         animator.SetTrigger("bucket");
     }
+
+
     public void GoToFireEnder()
     {
         animator.SetBool("idle", false);
@@ -249,22 +270,23 @@ public class Fred : MonoBehaviour
         var targetRotation = Quaternion.LookRotation(targetPosition - transform.position);
         float distance = Vector3.Distance(transform.position, targetPosition);
 
+        Debug.Log("Distance between fire ender: " + distance);
 
-        if (distance > .3f & !iptal)
+        if (distance > 0.3f & !iptal)
         {
             animator.SetBool("idle", false);
             transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime / distance);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, speed * Time.deltaTime);
-        }
-        else if (!iptal)
+
+        }else if (!iptal)
         {
             animator.SetTrigger("pickup");
 
-
             Fire = false;
-
         }
     }
+
+    
     public void TakeFire()
     {
         FireEnder.SetActive(false);
@@ -274,12 +296,15 @@ public class Fred : MonoBehaviour
         animator.SetBool("idle", false);
         
     }
+    
+
     public void GoToMachine()
     {
         targetPosition = firend.position;
         var targetRotation = Quaternion.LookRotation(targetPosition - transform.position);
         float distance = Vector3.Distance(transform.position, targetPosition);
 
+        Debug.Log("Distance between fire: " + distance);
 
         if (distance > .7f & !dontwalk)
         {
@@ -295,10 +320,14 @@ public class Fred : MonoBehaviour
             FireEnd = false;
         }
     }
+
+    
     public void FireEndTrigger()
     {
         FireEnd = true;
     }
+
+    
     public void FirendAnim()
     {
         FireEnderFred.SetActive(false);
@@ -310,10 +339,13 @@ public class Fred : MonoBehaviour
         canCrouch = true;
         EndFire = true;
     }
-   public void PaintEnd()
+
+    
+    public void PaintEnd()
     {
         endPaint = true;
     }
+    
     
     public void SceneGec()
     {
