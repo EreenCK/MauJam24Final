@@ -5,17 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class OptionsMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public GameObject startMenuUI;
+    public GameObject optionsMenuUI;
 
     public void SetInverseMouse(bool invMouse)
     {
@@ -44,5 +35,11 @@ public class OptionsMenu : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene("OpeningScene");
+    }
+
+    public void OptionsOn()
+    {
+        startMenuUI.SetActive(false);
+        optionsMenuUI.SetActive(true);
     }
 }
