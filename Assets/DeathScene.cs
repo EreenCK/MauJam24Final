@@ -20,7 +20,7 @@ public class DeathScene : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene("Brief2Fail");
         }
     }
 }

@@ -343,7 +343,10 @@ public class Fred : MonoBehaviour
     
     public void PaintEnd()
     {
+        CreatedBucket.SetActive(false);
+        animator.SetBool("idle", true);
         endPaint = true;
+       
     }
     
     
