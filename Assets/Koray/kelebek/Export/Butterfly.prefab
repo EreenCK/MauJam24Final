@@ -206,7 +206,7 @@ MonoBehaviour:
   chargeSFX: {fileID: 8866168538941650720}
   grabDelay: 0.1
   maxGrabDist: 10
-  minGrabDist: 0
+  minGrabDist: 7
   camTransform: {fileID: 0}
   IgnoreRayCast:
     serializedVersion: 2
@@ -229,7 +229,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: bc8d47c3e753e484698b8f716ff58607, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -325,7 +325,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 164eb28abaa83b64c98a8b45da37b734, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -517,7 +517,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: d4e27f8d2575d044a83048879c23bce5, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0

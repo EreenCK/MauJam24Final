@@ -38,7 +38,7 @@ public class ExplodeObject : MonoBehaviour
     {
         Debug.Log(hitObject + ", " + gameObject);
 
-        if(hitObject == gameObject & !didExploded)
+        if(hitObject == gameObject && !didExploded)
         {
             Debug.Log("Explode object");
 

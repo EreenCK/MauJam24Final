@@ -18,6 +18,7 @@ public class Fred : MonoBehaviour
     public AudioSource glassSound;
     public bool StopPath = false;
     public GameObject glass;
+    private GameObject camlar;
     public Transform chair;
     public Transform fallpoint;
     public Transform firepoint;
@@ -46,6 +47,7 @@ public class Fred : MonoBehaviour
     public bool endPaint = false;
     public bool EndGlass = false;
     public bool EndFire = false;
+    
 
 
     void Start()
@@ -158,9 +160,12 @@ public class Fred : MonoBehaviour
 
     public void GoToGlass()
     {
-        canCrouch = true;
-        
-        animator.SetBool("idle", false);
+        if(!EndGlass)
+        {
+            canCrouch = true;
+            animator.SetBool("idle", false);
+        }
+
         targetPosition = BrokeGlass.transform.position;
 
         Debug.Log("Broken glass position: " + targetPosition);
@@ -177,11 +182,25 @@ public class Fred : MonoBehaviour
 
         }else if (!FireEnd & canCrouch & !iptal)
         {
+            Debug.Log("Cam temizlendi");
+
             animator.SetTrigger("crouch");
-            animator.SetBool("idle", true);
+            animator.SetBool("crouchBool", true);
             BrokenGlass = false;
             EndGlass = true;
         }
+    }
+
+
+    public void EndGlassFunc()
+    {
+        Debug.Log("Crouch end");
+
+        camlar.SetActive(false);
+        canCrouch = false;
+        animator.SetTrigger("crouch");
+        animator.SetBool("crouchBool", false);
+        animator.SetBool("idle", true);
     }
 
 
@@ -216,8 +235,9 @@ public class Fred : MonoBehaviour
     public void CreateGlass(Transform transform1)
     {
         glassSound.PlayOneShot(glassSound.clip);
-        Instantiate(BrokeGlass, transform1.position, Quaternion.identity);
+        camlar = Instantiate(BrokeGlass, transform1.position, Quaternion.identity);
         glass.GetComponent<MeshRenderer>().enabled = false;
+
     }
 
 
@@ -256,9 +276,11 @@ public class Fred : MonoBehaviour
 
     public void GetPainted()
     {
+        animator.SetBool("idle", true);
         fallingBucket.SetActive(false);
         CreatedBucket.SetActive(true);
         animator.SetTrigger("bucket");
+        paint = false;
     }
 
 
@@ -272,7 +294,7 @@ public class Fred : MonoBehaviour
 
         Debug.Log("Distance between fire ender: " + distance);
 
-        if (distance > 0.3f & !iptal)
+        if (distance > 1.3f & !iptal)
         {
             animator.SetBool("idle", false);
             transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime / distance);
