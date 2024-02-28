@@ -237,9 +237,16 @@ public class ButterflyMovement : MonoBehaviour
     void OnCollisionEnter(Collision other)
     {
         Debug.Log("On collision enter: " + other.gameObject);
+
         if(isDashStarted)
         {
             shootedObject = other.gameObject;
+            
+            if(shootedObject.TryGetComponent(out ExplodeObject Explode))
+            {
+                shootedObject.GetComponent<ExplodeObject>().Explode(gameObject);
+            }
+
             Debug.Log(hitObject);
         }
     }

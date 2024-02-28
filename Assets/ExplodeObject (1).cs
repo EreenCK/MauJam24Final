@@ -8,22 +8,15 @@ public class ExplodeObject : MonoBehaviour
     public AudioSource boxExplodeSFX;
     private ButterflyMovement butterflyMovementSc;
     public bool didExploded = false;
-    private GameObject hitObject;
     private GameObject childObj;
-    public float BrokenPartCollMultp;
     public GameObject kapat;
     public GameObject PatlayanYol;
     public GameObject PatlayanKopru;
     
-    void Start()
-    {
-        butterflyMovementSc = GameObject.FindWithTag("Butterfly").GetComponent<ButterflyMovement>();
-    }
-
 
     void Update()
     {
-        hitObject = butterflyMovementSc.shootedObject;
+        //hitObject = butterflyMovementSc.shootedObject;
         if (didExploded && gameObject == PatlayanYol)
         {
             kapat.SetActive(false);
@@ -34,11 +27,12 @@ public class ExplodeObject : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
-    {
-        Debug.Log(hitObject + ", " + gameObject);
 
-        if(hitObject == gameObject && !didExploded)
+    public void Explode(GameObject player)
+    {
+        butterflyMovementSc = player.GetComponent<ButterflyMovement>();
+
+        if(!didExploded)
         {
             Debug.Log("Explode object");
 
@@ -47,19 +41,15 @@ public class ExplodeObject : MonoBehaviour
             Destroy(GetComponent<Rigidbody>());
             Destroy(GetComponent<Collider>());
             
-            foreach (var childRbs in gameObject.GetComponentsInChildren<Rigidbody>())
+            foreach (var childCollider in gameObject.GetComponentsInChildren<MeshCollider>())
             {
-                childObj = childRbs.gameObject;
+                childObj = childCollider.gameObject;
                 if(childObj != gameObject)
                 {
-                    childObj.AddComponent<MeshCollider>();
-                    childObj.GetComponent<MeshCollider>().convex = true;
+                    childObj.AddComponent<Rigidbody>();
+                    childObj.GetComponent<Rigidbody>().isKinematic = false;
 
-                    //childObj.AddComponent<BrokenPartExplode>();
-                    //childObj.GetComponent<BrokenPartExplode>().collisionMultp = BrokenPartCollMultp;
-
-                    childRbs.isKinematic = false;
-                    childRbs.AddExplosionForce(collisionMultp, butterflyMovementSc.hit.point, 2);
+                    childObj.GetComponent<Rigidbody>().AddExplosionForce(collisionMultp, butterflyMovementSc.hit.point, 2);
                 }
             }
 
