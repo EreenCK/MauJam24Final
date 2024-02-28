@@ -852,11 +852,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: 56c1df4f-2552-4ad4-8869-a25cab8fac6e
+  cloudProjectId: de0c200e-dd0b-4115-ae7a-550e4650975b
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: MAU JAM 2024
-  organizationId: erenckr
+  projectName: Bureau of Flutterly Conduct
+  organizationId: koray0123
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

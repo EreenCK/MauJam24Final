@@ -7249,19 +7249,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7826676692578342658, guid: 91ddf33e3e1cdb34a8dfc05a431730c8, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.947947
+      value: 0.9479471
       objectReference: {fileID: 0}
     - target: {fileID: 7826676692578342658, guid: 91ddf33e3e1cdb34a8dfc05a431730c8, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.31842795
+      value: 0.31842804
       objectReference: {fileID: 0}
     - target: {fileID: 7826676692578342658, guid: 91ddf33e3e1cdb34a8dfc05a431730c8, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.00000019099866
+      value: -0.00000008624156
       objectReference: {fileID: 0}
     - target: {fileID: 7826676692578342658, guid: 91ddf33e3e1cdb34a8dfc05a431730c8, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000064158975
+      value: 0.000000028969689
       objectReference: {fileID: 0}
     - target: {fileID: 7826676692578342658, guid: 91ddf33e3e1cdb34a8dfc05a431730c8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -12704,11 +12704,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2132357969522063973, guid: 582241c987b0e744db572c674bb4d7c2, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000116846145
+      value: -0.00000005961417
       objectReference: {fileID: 0}
     - target: {fileID: 2132357969522063973, guid: 582241c987b0e744db572c674bb4d7c2, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000036256523
+      value: 0.00000001849785
       objectReference: {fileID: 0}
     - target: {fileID: 2132357969522063975, guid: 582241c987b0e744db572c674bb4d7c2, type: 3}
       propertyPath: m_Layer
@@ -12728,7 +12728,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2132357969648081432, guid: 582241c987b0e744db572c674bb4d7c2, type: 3}
       propertyPath: m_XAxis.m_MaxSpeed
-      value: 120
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 2132357969648081432, guid: 582241c987b0e744db572c674bb4d7c2, type: 3}
       propertyPath: m_YAxis.m_MaxSpeed
@@ -12808,19 +12808,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2132357969975181815, guid: 582241c987b0e744db572c674bb4d7c2, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.94794714
+      value: 0.9479471
       objectReference: {fileID: 0}
     - target: {fileID: 2132357969975181815, guid: 582241c987b0e744db572c674bb4d7c2, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.3184279
+      value: 0.31842798
       objectReference: {fileID: 0}
     - target: {fileID: 2132357969975181815, guid: 582241c987b0e744db572c674bb4d7c2, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.00000018889777
+      value: -0.00000008148303
       objectReference: {fileID: 0}
     - target: {fileID: 2132357969975181815, guid: 582241c987b0e744db572c674bb4d7c2, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000063453236
+      value: 0.000000027371222
       objectReference: {fileID: 0}
     - target: {fileID: 2132357970091577267, guid: 582241c987b0e744db572c674bb4d7c2, type: 3}
       propertyPath: m_FollowOffset.y
